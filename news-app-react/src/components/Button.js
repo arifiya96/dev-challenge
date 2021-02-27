@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 
 const Button = styled.a`
-  color: rgba(0, 0, 0, .95);
-  background: transparent;
+  color: white;
+  background-color: #0F2027;
   margin: 0;
   padding: 0;
   border: none;
-  border-radius: 2px;
+  border-radius: 5px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: content;
+  width: 70px;
   height: 36px;
   outline: 0;
   text-transform: uppercase;
