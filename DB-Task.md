@@ -36,7 +36,7 @@ Events and members will be in separate collections. Each collection has a list o
  
 2. Define what steps required for event registration (i.e. database flow). Suppose you are already logged in and on registration page with option to select event from dropdown list, member information is available globally.
 
-When a member is already logged in, the dropdown can be sourced from the events collection. For each doc in the events collection, they will see the title, date, location and cost. Once they have selected an event and confirm payment, it will store the member doc ID under the attendees collection. To work out how much they owe (>= 0 means they have paid in full, < 0 means they have only partically paid), you can subtract their payment from the registration cost and store that value in the amount_owed field.
+When a member is already logged in, the dropdown can be sourced from the events collection. For each doc in the events collection, they will see the title, date, location and cost. Once they have selected an event and confirm payment, it will store the member doc ID under the attendees collection. To work out how much they owe (>= 0 means they have paid in full, < 0 means they have only partially paid), you can subtract their payment from the registration cost and store that value in the amount_owed field.
 
 I am logged in and I want to sign up for Suvera's coding competition which costs $200. I only pay $150 and I will pay more later.
 
