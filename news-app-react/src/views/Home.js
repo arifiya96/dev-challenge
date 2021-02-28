@@ -5,7 +5,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import Article from 'components/Article';
 import regions from '../components/Region';
-//import Dropdown from '../components/Dropdown'; <-- not sure how I feel about having state within a child component...
+//import Dropdown from '../components/Dropdown';
 
 //Material UI components used for dropdown
 import FormControl from '@material-ui/core/FormControl';
@@ -112,7 +112,7 @@ function Home() {
   const ShowAllArticles = () => {
     return (
       articles.data?.map((article, index) => (
-        <Article key={index} article={article}></Article>
+        <Article key={index} article={article} data-testid='article-card'></Article>
       ))
     )
   }
@@ -127,7 +127,7 @@ function Home() {
     })
     return (
       filtered_articles.map((article, index) => (
-        <Article key={index} article={article} />
+        <Article key={index} article={article} aria-label={`${filtered_articles.length} article from this source`} data-testid='article-card' />
       ))
     )
   }
@@ -171,30 +171,30 @@ function Home() {
       </InputGroup>
 
       {articles.data?.length > 0 &&
-        <ArticleList>
+        <ArticleList> {/*<-- Use ArticleList as higher order component*/}
           {/*Region and source filters. If user has searched for something, region filter will disappear*/}
           {searchText.length == 0 ? 
-            <FilterArea data-testid='region-filter'>
+            <FilterArea data-testid='region-filter' aria-label='filter by region'>
               <FormControl style={{width: 300}}>
                 <InputLabel style={{color: 'white'}}>{region_input_label}</InputLabel>
                 <Select value={region_selector} onChange={(event) => setRegion_selector(event.target.value)} style={{color: 'white'}}>
                   {regions?.map((item_name, index) => (
-                    <MenuItem value={item_name} key={index} role='option' data-testid='region'>{item_name.country}</MenuItem>
+                    <MenuItem value={item_name} key={index} role='option' data-testid='region-source' aria-flowto='article-list-1'>{item_name.country}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
             </FilterArea> : null}
-          <FilterArea data-testid='region-filter'>
+          <FilterArea data-testid='article-source-filter'>
             <FormControl style={{width: 300}}>
               <InputLabel style={{color: 'white'}}>{sources_input_label}</InputLabel>
               <Select value={source} onChange={(event) => setSource(event.target.value)} style={{color: 'white'}}>
                 {articles.sources?.map((item_name, index) => (
-                  <MenuItem value={item_name} key={index} role='option' data-testid='article-source'>{item_name}</MenuItem>
+                  <MenuItem value={item_name} key={index} role='option' data-testid='article-source' aria-flowto='article-list-1'>{item_name}</MenuItem>
                 ))}
               </Select>
             </FormControl>
           </FilterArea>
-          {/*Render based on if the filter is selected or not*/}
+          {/*Render based on if the filter is selected or not*/} 
           {source == 'All sources' ? ShowAllArticles() : FilterCategory()}
         </ArticleList>}
     </HomePage>

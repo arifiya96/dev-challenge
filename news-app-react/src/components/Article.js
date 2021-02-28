@@ -38,7 +38,8 @@ function Article({ article }) {
             <CardButton
               href={url}
               target='_blank'
-              rel='noreferrer'>
+              rel='noreferrer'
+              data-testid='external-link-article'>
               Read
             </CardButton>
           </ActionArea>
