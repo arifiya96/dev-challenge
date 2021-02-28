@@ -151,18 +151,20 @@ function Home() {
   }, [searchText, region_selector]);
 
   return (
-    <HomePage>
-      <PageTitle>
+    <HomePage aria-label={`Showing you the ${contentTitle}`}>
+      <PageTitle data-testid='search-title'>
         <h2>Showing you the {contentTitle}</h2>
       </PageTitle>
 
-      <InputGroup>
+      <InputGroup role='search' aria-label='for news articles'>
         <SearchInput
           ref={searchInputRef}
           name='search-input'
           type='text'
           placeholder={inputLabel}
           defaultValue={searchText}
+          aria-label={inputLabel}
+          data-testid='search-input'
           onChange={loadSearchInput(setSearchText)} />
 
         <SearchIcon />
@@ -172,22 +174,22 @@ function Home() {
         <ArticleList>
           {/*Region and source filters. If user has searched for something, region filter will disappear*/}
           {searchText.length == 0 ? 
-            <FilterArea>
+            <FilterArea data-testid='region-filter'>
               <FormControl style={{width: 300}}>
                 <InputLabel style={{color: 'white'}}>{region_input_label}</InputLabel>
                 <Select value={region_selector} onChange={(event) => setRegion_selector(event.target.value)} style={{color: 'white'}}>
                   {regions?.map((item_name, index) => (
-                    <MenuItem value={item_name} key={index}>{item_name.country}</MenuItem>
+                    <MenuItem value={item_name} key={index} role='option' data-testid='region'>{item_name.country}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
             </FilterArea> : null}
-          <FilterArea>
+          <FilterArea data-testid='region-filter'>
             <FormControl style={{width: 300}}>
               <InputLabel style={{color: 'white'}}>{sources_input_label}</InputLabel>
               <Select value={source} onChange={(event) => setSource(event.target.value)} style={{color: 'white'}}>
                 {articles.sources?.map((item_name, index) => (
-                  <MenuItem value={item_name} key={index}>{item_name}</MenuItem>
+                  <MenuItem value={item_name} key={index} role='option' data-testid='article-source'>{item_name}</MenuItem>
                 ))}
               </Select>
             </FormControl>
