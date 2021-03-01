@@ -29,7 +29,7 @@ Functionality tasks:
 1. *Frontend*: add a section to the homepage which allows the user to filter the results according to **ONE** category that a reader might want to filter news by (e.g. topic, source, date, or ??)<br>
 *I decided to create a filter function which allows the user to filter by source and region. More details can be found in the readme file in news-app-react.*
 2. *Backend*: add the backend functionality needed for users to be able to bookmark any headlines they want to read later.<br>
-*Link to firestore where it keeps track of bookmarked articles?*
+*Link to firestore where it keeps track of bookmarked articles*
 
 Quality tasks:
 1. *Frontend*: implement web accessibility on components<br>
