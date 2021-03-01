@@ -4,6 +4,14 @@ import styled from 'styled-components';
 import SearchIcon from '@material-ui/icons/Search';
 
 import Article from 'components/Article';
+import regions from '../components/Region';
+//import Dropdown from '../components/Dropdown';
+
+//Material UI components used for dropdown
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const stage = process.env.NODE_ENV;
 const baseURL = `${process.env.APP_SERVICE_URL}${stage}`;
@@ -24,6 +32,7 @@ async function loadArticles(type, params, setArticles) {
   setArticles({
     isLoading: true,
     data: [],
+    sources: [], //<-- Added sources
     onError: false
   });
 
@@ -40,9 +49,19 @@ async function loadArticles(type, params, setArticles) {
     if (response.status >= 200 && response.status <= 299) {
       const { articles } = await response.json();
 
+      //Once response received, traverse through articles and store the sources into temp variable
+      const sources_array = ['All sources']; //<-- Temp variable
+      articles.map(article => {
+        const sources_name = article.source.name;
+        if (sources_array.includes(sources_name) == false){
+          sources_array.push(sources_name)
+        }
+      })
+
       setArticles({
         isLoading: false,
         data: articles || [],
+        sources: sources_array || [], //Set sources from temp variable
         onError: false
       });
     }
@@ -50,6 +69,7 @@ async function loadArticles(type, params, setArticles) {
       setArticles({
         isLoading: false,
         data: [],
+        sources: [],
         onError: true
       });
     }
@@ -57,15 +77,17 @@ async function loadArticles(type, params, setArticles) {
     setArticles({
       isLoading: false,
       data: [],
+      sources: [],
       onError: true
     });
   }
 }
 
 function Home() {
-  const defaultContentTitle = 'top UK headlines';
   const searchContentTitle = 'search results for:';
   const inputLabel = 'Filter news by keyword. Advanced: use quotes (\'\') for exact matches, and the + / - symbols for needed / excluded words.';
+  const sources_input_label = 'Select by source';
+  const region_input_label = 'Select by region';
 
   const searchInputRef = useRef();
 
@@ -74,8 +96,41 @@ function Home() {
   const [articles, setArticles] = useState({
     isLoading: true,
     data: [],
+    sources: [],
     onError: false
   });
+
+  //State source for filtering. This will be used to track which source the user has clicked.
+  const [source, setSource] = useState('All sources');
+
+  //State for region selector
+  const [region_selector, setRegion_selector] = useState({country: 'UK 🇬🇧', code: 'gb'});
+
+  const defaultContentTitle = `top ${region_selector.country} headlines`;
+
+  //If users has not chosen a source filter, all articles will render
+  const ShowAllArticles = () => {
+    return (
+      articles.data?.map((article, index) => (
+        <Article key={index} article={article} data-testid='article-card'></Article>
+      ))
+    )
+  }
+
+  //If user has chosen a source filter, only articles from specific source will render
+  const FilterCategory = () => {
+    const filtered_articles = []; //<-- temp variable for filtered articles
+    articles.data?.map(article => {
+      if (article.source.name == source){
+        filtered_articles.push(article);
+      }
+    })
+    return (
+      filtered_articles.map((article, index) => (
+        <Article key={index} article={article} aria-label={`${filtered_articles.length} article from this source`} data-testid='article-card' />
+      ))
+    )
+  }
 
   useEffect(() => {
     if(searchText.length > 0) {
@@ -89,35 +144,58 @@ function Home() {
 
       setContentTitle(defaultContentTitle);
 
-      let bodyParam = { country: 'gb' };
+      let bodyParam = { country: region_selector.code }; //<-- monitor region selector state
 
       loadArticles('headlines', bodyParam, setArticles);
     }
-  }, [searchText]);
+  }, [searchText, region_selector]);
 
   return (
-    <HomePage>
-      <PageTitle>
-        Showing you the {contentTitle}
+    <HomePage aria-label={`Showing you the ${contentTitle}`}>
+      <PageTitle data-testid='search-title'>
+        <h2>Showing you the {contentTitle}</h2>
       </PageTitle>
 
-      <InputGroup>
+      <InputGroup role='search' aria-label='for news articles'>
         <SearchInput
           ref={searchInputRef}
           name='search-input'
           type='text'
           placeholder={inputLabel}
           defaultValue={searchText}
+          aria-label={inputLabel}
+          data-testid='search-input'
           onChange={loadSearchInput(setSearchText)} />
 
         <SearchIcon />
       </InputGroup>
 
       {articles.data?.length > 0 &&
-        <ArticleList>
-          {articles.data?.map((article, index) => (
-            <Article key={index} article={article} />
-          ))}
+        <ArticleList> {/*<-- Use ArticleList as higher order component*/}
+          {/*Region and source filters. If user has searched for something, region filter will disappear*/}
+          {searchText.length == 0 ? 
+            <FilterArea data-testid='region-filter' aria-label='filter by region'>
+              <FormControl style={{width: 300}}>
+                <InputLabel style={{color: 'white'}}>{region_input_label}</InputLabel>
+                <Select value={region_selector} onChange={(event) => setRegion_selector(event.target.value)} style={{color: 'white'}}>
+                  {regions?.map((item_name, index) => (
+                    <MenuItem value={item_name} key={index} role='option' data-testid='region-source' aria-flowto='article-list-1'>{item_name.country}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </FilterArea> : null}
+          <FilterArea data-testid='article-source-filter'>
+            <FormControl style={{width: 300}}>
+              <InputLabel style={{color: 'white'}}>{sources_input_label}</InputLabel>
+              <Select value={source} onChange={(event) => setSource(event.target.value)} style={{color: 'white'}}>
+                {articles.sources?.map((item_name, index) => (
+                  <MenuItem value={item_name} key={index} role='option' data-testid='article-source' aria-flowto='article-list-1'>{item_name}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </FilterArea>
+          {/*Render based on if the filter is selected or not*/} 
+          {source == 'All sources' ? ShowAllArticles() : FilterCategory()}
         </ArticleList>}
     </HomePage>
   );
@@ -135,7 +213,7 @@ const HomePage = styled.section`
   }
 `;
 
-const PageTitle = styled.h1`
+const PageTitle = styled.h2`
   font-weight: 400;
   font-size: 34px;
   line-height: 40px;
@@ -143,6 +221,7 @@ const PageTitle = styled.h1`
   margin-bottom: 2.5vh;
   text-overflow: wrap
   width: 100%;
+  color: #fafafa;
 `;
 
 const InputGroup = styled.div`
@@ -194,6 +273,11 @@ const SearchInput = styled.input`
       fill: #ee44aa;
     }
   }
+`;
+
+//Customised div for filter selections
+const FilterArea = styled.section`
+  margin: 5px;
 `;
 
 const ArticleList = styled.ul`

@@ -38,7 +38,8 @@ function Article({ article }) {
             <CardButton
               href={url}
               target='_blank'
-              rel='noreferrer'>
+              rel='noreferrer'
+              data-testid='external-link-article'>
               Read
             </CardButton>
           </ActionArea>
@@ -64,13 +65,13 @@ const Card = styled.article`
   background-color: #fff;
   border-color: #fff;
   color: rgba(0, 0, 0, .87);
-  border-radius: 2px;
+  border-radius: 10px;
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2),
     0 2px 2px 0 rgba(0, 0, 0, .14),
     0 1px 5px 0 rgba(0, 0, 0, .12);
   text-decoration: none;
   margin-top: 2.5vh;
-  width: 50%;
+  width: 70%; //<-- Made width slightly bigger from 50% to 70%
   max-height: content;
 
   @media (max-width: 486px) {
@@ -86,6 +87,7 @@ const ImageWrapper = styled.section`
   margin: 0;
   width: 100%;
   padding-bottom: 36.3636%;
+  border-radius: 10px;
 `;
 
 const Image = styled.img`

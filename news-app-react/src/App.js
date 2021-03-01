@@ -58,7 +58,7 @@ const AppContainer = styled.div`
 const MainView = styled.main`
   grid-area: content;
   max-width: 100%;
-  background-color: #fafafa;  
+  background-color: #0F2027;  
   padding: 24px;
 
   @media (max-width: 486px) {

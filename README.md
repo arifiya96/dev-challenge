@@ -23,26 +23,26 @@ First, the code: After you have gotten familiar with the app, [technical details
 
 **You must choose at least one frontend and one backend task! 😉**
 
+I deleted the tasks that I did not do for your convenience.
+
 Functionality tasks:
-1. *Frontend*: add a section to the homepage which allows the user to filter the results according to **ONE** category that a reader might want to filter news by (e.g. topic, source, date, or ??) 
-2. *Backend*: add the backend functionality needed for users to be able to bookmark any headlines they want to read later
+1. *Frontend*: add a section to the homepage which allows the user to filter the results according to **ONE** category that a reader might want to filter news by (e.g. topic, source, date, or ??)<br>
+*I decided to create a filter function which allows the user to filter by source and region. More details can be found in the readme file in news-app-react.*
+2. *Backend*: add the backend functionality needed for users to be able to bookmark any headlines they want to read later.<br>
+*Link to firestore where it keeps track of bookmarked articles?*
 
 Quality tasks:
-1. *Frontend*: implement web accessibility on components
-2. *Backend*: make a performance improvement to the API as a whole
+1. *Frontend*: implement web accessibility on components<br>
+*Tested aria components with ChromeVox. More details can be found in the readme file in news-app-react.*
    
 Testing tasks:
-1. *Frontend*: Add end-to-end testing on the frontend (e.g. using [Cypress](https://www.cypress.io/)), including at least 1 or 2 user-behaviour-driven tests
-2. *Backend*: Add unit testing on the backend (e.g. using [Jest](https://www.serverless.com/blog/unit-testing-nodejs-serverless-jest/) or [tape](https://www.npmjs.com/package/tape)), including at least 1 or 2 user-behaviour-driven tests
+1. *Frontend*: Add end-to-end testing on the frontend (e.g. using [Cypress](https://www.cypress.io/)), including at least 1 or 2 user-behaviour-driven tests.<br>
+*My test can be found under news-app-react>tests>e2e>specs>test.js. Instructions to run the test on can be found in the readme file under news-app-react. Detailed comments can be found in the test.js script if you want to know the behaviour behind each test.*
 
 *optional extra tasks:* 
 If you find that you have time and would like to make the app even nicer, you could tackle one of the following tasks:
-   - (front-end) improve the functionality & design of the Article component (`src/components/Article.(vue|js)`) so that it is more intuitive to a reader
-   - (front-end) improve the overall design of the homepage
-   - (front-end) make the website SEO friendly
-   - (backend) improve error handling
-   - (backend) add the minimum required documentation a front-end developer interfacing with this backend might like to see
-   - (backend) write a load test for one of the endpoints (e.g. using [Artillery](https://artillery.io/docs/guides/overview/welcome.html))
+   - (front-end) improve the functionality & design of the Article component (`src/components/Article.(vue|js)`) so that it is more intuitive to a reader - *Region and source filter gives user the ability to refine search.*
+   - (front-end) improve the overall design of the homepage - *Changed colour scheme in favour of a dark themed approach. Made slight changes to the article card layout to make it look more like a card (rounded edges, rounded buttons etc)*
    
 **Whilst we have provided both Vue and React versions, If you prefer, you are welcome to use your own/preferred front-end framework**, to ping the backend service. You are also welcome to **make any changes to the codebase that you would like to, as long as it is still functional.** 
 
@@ -53,7 +53,7 @@ Then, for the design section, you can **choose one** between the following two:
 
 Frontend - analytics design: create a markdown file describing what **types of user behaviour** you would like to capture on this page for an analytical framework (e.g. [Heap](https://docs.heap.io/docs), [Amplitude](https://developers.amplitude.com/docs) or [Mixpanel](https://developer.mixpanel.com/docs)), and **why**.
 
-Backend - API design: create a markdown file describing what steps it takes for this API to become **ready for production usage**, including any dependencies, and **why**.
+*The markdown file for this task can be found under news-app-react and I called it Homepage-Design-Task*
 
 ### 3] DB Task
 Finally, write your answers to the **[Database Evaluation Task](DB-Task.md)** in your markdown file.
