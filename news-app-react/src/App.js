@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Home from 'views/Home';
 import About from 'views/About';
+import Bookmarked from './views/Bookmarked';
 import Navbar from 'components/Navbar';
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
             <Route exact={true} path='/' component={Home} />
 
             <Route path='/about' component={About} />
+
+            <Route path='/bookmarked' component={Bookmarked}></Route>
           </Switch>
         </MainView>
       </AppContainer>
