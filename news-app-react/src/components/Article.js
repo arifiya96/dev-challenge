@@ -3,9 +3,27 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Button from 'components/Button';
+import Bookmark from '@material-ui/icons/Bookmark';
+
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
 function Article({ article }) {
   const { urlToImage, title, source, author, publishedAt, description, url } = article;
+
+  const handleSubmit = () => {
+    firebase.firestore().collection('bookmarked').doc(title).set({
+      urlToImage: urlToImage,
+      title: title,
+      source: source,
+      author: author,
+      publishedAt: publishedAt,
+      description: description,
+      url: url
+    }).then(() => {
+      alert('Article bookmarked!');
+    })
+  }
 
   if (!title && !description) {
     return null;
@@ -42,6 +60,11 @@ function Article({ article }) {
               data-testid='external-link-article'>
               Read
             </CardButton>
+            <button 
+              style={{backgroundColor: '#0F2027', marginLeft: 'auto'}}
+              onClick={() => handleSubmit()}>
+              <Bookmark style={{color: 'white'}}></Bookmark>
+            </button>
           </ActionArea>
         </Content>
       </Card>

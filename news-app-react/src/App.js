@@ -7,6 +7,12 @@ import About from 'views/About';
 import Bookmarked from './views/Bookmarked';
 import Navbar from 'components/Navbar';
 
+import firebaseConfig from '/Users/ifkar/suvera-dev-challenge/dev-challenge/news-app-react/firestore_api/api_keys';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+
+firebase.initializeApp(firebaseConfig);
+
 function App() {
   return (
     <Router>
