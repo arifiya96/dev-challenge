@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import debounce from 'debounce';
 import styled from 'styled-components';
 import SearchIcon from '@material-ui/icons/Search';
@@ -7,7 +8,7 @@ import Article from 'components/Article';
 import regions from '../components/Region';
 //import Dropdown from '../components/Dropdown';
 
-//Material UI components used for dropdown
+//Material UI components used for dropdown and customised button
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
@@ -184,6 +185,7 @@ function Home() {
                 </Select>
               </FormControl>
             </FilterArea> : null}
+
           <FilterArea data-testid='article-source-filter'>
             <FormControl style={{width: 300}}>
               <InputLabel style={{color: 'white'}}>{sources_input_label}</InputLabel>
@@ -194,6 +196,14 @@ function Home() {
               </Select>
             </FormControl>
           </FilterArea>
+
+          {/*See bookmarked articles*/}
+          <p style={{color: 'white'}}>
+            <Link to="/bookmarked" style={{color: 'white'}}>
+              See bookmarked articles
+            </Link>
+          </p>
+
           {/*Render based on if the filter is selected or not*/} 
           {source == 'All sources' ? ShowAllArticles() : FilterCategory()}
         </ArticleList>}
