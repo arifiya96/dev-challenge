@@ -62,7 +62,8 @@ function Article({ article }) {
             </CardButton>
             <button 
               style={{backgroundColor: '#0F2027', marginLeft: 'auto'}}
-              onClick={() => handleSubmit()}>
+              onClick={() => handleSubmit()}
+              aria-label='Click to bookmark'>
               <Bookmark style={{color: 'white'}}></Bookmark>
             </button>
           </ActionArea>

@@ -16,3 +16,6 @@
 
 # logs
 npm-debug.log*
+
+# firestore keys
+/firestore_api
